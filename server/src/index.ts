@@ -60,7 +60,8 @@ if (env.NODE_ENV === 'production') {
   app.use(express.static(clientDist, { maxAge: '30d', immutable: true }));
 
   // SPA fallback — all non-API routes serve index.html
-  app.get('*', (_req, res) => {
+  // Express 5 requires named wildcard params (not bare '*')
+  app.get('/{*splat}', (_req, res) => {
     res.sendFile(path.join(clientDist, 'index.html'));
   });
 } else {

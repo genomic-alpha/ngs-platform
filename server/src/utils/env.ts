@@ -16,8 +16,8 @@ export const env = {
   /** Node environment (development, production, test) */
   NODE_ENV: process.env.NODE_ENV || 'development',
 
-  /** CORS origin URL for frontend (default: localhost:5173 for Vite) */
-  CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  /** CORS origin URL for frontend (default: localhost:5173 for Vite, empty = same-origin) */
+  CORS_ORIGIN: process.env.CORS_ORIGIN !== undefined ? process.env.CORS_ORIGIN : 'http://localhost:5173',
 } as const;
 
 /**
