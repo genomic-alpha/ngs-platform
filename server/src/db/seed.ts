@@ -388,7 +388,7 @@ async function truncateTables() {
   try {
     await client.query('BEGIN');
     const tables = [
-      'audit_logs',
+      'audit_log',
       'partners',
       'historical_snapshots',
       'timeline_events',
