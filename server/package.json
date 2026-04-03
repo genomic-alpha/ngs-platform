@@ -5,10 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc && cp -r src/db/migrations dist/db/migrations",
-    "start": "node dist/index.js",
+    "build": "echo 'Server uses tsx runtime — no compile step needed'",
+    "start": "tsx src/index.ts",
     "migrate": "tsx src/db/migrate.ts",
-    "migrate:prod": "node dist/db/migrate.js",
     "seed": "tsx src/db/seed.ts",
     "test": "vitest run"
   },
@@ -18,6 +17,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.16.0",
+    "tsx": "^4.19.0",
     "zod": "^3.24.0"
   },
   "devDependencies": {
@@ -27,7 +27,6 @@
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^24.12.0",
     "@types/pg": "^8.11.0",
-    "tsx": "^4.19.0",
     "typescript": "~5.9.3",
     "vitest": "^4.1.2"
   }
