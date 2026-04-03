@@ -6,17 +6,15 @@
 
 databases:
   - name: ngs-platform-db
-    plan: free          # free tier: 256MB, 1GB storage, 90-day expiry
+    plan: free
     databaseName: ngs_platform
     user: ngs_admin
-    region: oregon
 
 services:
   - type: web
     name: ngs-platform
-    runtime: node
-    plan: free          # free tier: 750 hrs/month, spins down after inactivity
-    region: oregon
+    env: node
+    plan: free
     buildCommand: npm ci && npm run build && cd server && npm ci && npm run build
     startCommand: cd server && node dist/db/migrate.js && node dist/index.js
     envVars:
@@ -29,7 +27,6 @@ services:
           name: ngs-platform-db
           property: connectionString
       - key: JWT_SECRET
-        generateValue: true     # Render auto-generates a random secret
+        generateValue: true
       - key: CORS_ORIGIN
-        value: ""               # empty = same-origin (frontend served by Express)
-    autoDeploy: true            # auto-deploy on push to connected branch
+        value: ""
