@@ -15,7 +15,7 @@ services:
     name: ngs-platform
     env: node
     plan: free
-    buildCommand: npm install && npm run build && cd server && npm install
+    buildCommand: NODE_ENV=development npm install && npm run build && cd server && npm install
     startCommand: cd server && npx tsx src/db/migrate.ts && npx tsx src/index.ts
     envVars:
       - key: NODE_ENV
