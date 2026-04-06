@@ -72,7 +72,7 @@ export function WorkflowBuilder({ products }: WorkflowBuilderProps) {
 
   const getCompatLevel = (sourceId: string, targetId: string, layerKey: string): string => {
     const entry = compatibility.find((c) => c.source === sourceId && c.target === targetId && c.layer === layerKey);
-    return entry?.level || 'incompatible';
+    return entry?.level || 'undetermined';
   };
 
   const selectProduct = (stepKey: string, productId: string | null) => {

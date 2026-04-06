@@ -39,9 +39,9 @@ export function CompatibilityView({ products }: CompatibilityViewProps) {
       validated: { bg: 'bg-green-900/20', border: 'border-green-600', text: 'text-green-400' },
       compatible: { bg: 'bg-blue-900/20', border: 'border-blue-600', text: 'text-blue-400' },
       theoretical: { bg: 'bg-yellow-900/20', border: 'border-yellow-600', text: 'text-yellow-400' },
-      incompatible: { bg: 'bg-gray-900/20', border: 'border-gray-600', text: 'text-gray-400' },
+      undetermined: { bg: 'bg-gray-900/20', border: 'border-gray-700', text: 'text-gray-500' },
     };
-    return colors[level] || colors.incompatible;
+    return colors[level] || colors.undetermined;
   };
 
   const getProduct = (id: string): Product | undefined => products.find((p) => p.id === id);
@@ -60,7 +60,7 @@ export function CompatibilityView({ products }: CompatibilityViewProps) {
       const row: { source: string; [key: string]: string | number } = { source: src };
       layerData.targets.forEach((tgt) => {
         const entry = layerData.entries.find((e) => e.source === src && e.target === tgt);
-        row[tgt] = entry?.level || 'incompatible';
+        row[tgt] = entry?.level || 'undetermined';
       });
       matrix.push(row);
     });
@@ -223,7 +223,7 @@ export function CompatibilityView({ products }: CompatibilityViewProps) {
                   </td>
                   {layerData.targets.map((target) => {
                     const entry = layerData.entries.find((e) => e.source === source && e.target === target);
-                    const level = entry?.level || 'incompatible';
+                    const level = entry?.level || 'undetermined';
                     const colors = getLevelColor(level);
                     const isHovered = hoveredCell?.src === source && hoveredCell?.tgt === target;
 
@@ -234,10 +234,10 @@ export function CompatibilityView({ products }: CompatibilityViewProps) {
                           onMouseEnter={() => setHoveredCell({ src: source, tgt: target })}
                           onMouseLeave={() => setHoveredCell(null)}
                           className={`w-full py-2 px-3 rounded text-xs font-semibold border transition ${
-                            isHovered ? 'ring-2 ring-white' : ''
-                          } ${colors.bg} ${colors.border} border ${colors.text} cursor-pointer hover:opacity-80`}
+                            isHovered && entry ? 'ring-2 ring-white' : ''
+                          } ${colors.bg} ${colors.border} border ${colors.text} ${entry ? 'cursor-pointer hover:opacity-80' : 'cursor-default opacity-60'}`}
                         >
-                          {level.charAt(0).toUpperCase() + level.slice(1)}
+                          {entry ? level.charAt(0).toUpperCase() + level.slice(1) : '—'}
                         </button>
                       </td>
                     );
