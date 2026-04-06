@@ -229,10 +229,10 @@ async function seedIntelSignals() {
     await client.query('BEGIN');
     for (const signal of DEFAULT_INTEL_SIGNALS) {
       await client.query(
-        `INSERT INTO intel_signals (id, date, type, vendor, title, impact, summary, source, products, created_at, updated_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW(), NOW())
+        `INSERT INTO intel_signals (id, date, type, vendor, title, impact, summary, source, created_at, updated_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())
          ON CONFLICT (id) DO UPDATE SET
-         date = $2, type = $3, vendor = $4, title = $5, impact = $6, summary = $7, source = $8, products = $9, updated_at = NOW()`,
+         date = $2, type = $3, vendor = $4, title = $5, impact = $6, summary = $7, source = $8, updated_at = NOW()`,
         [
           signal.id,
           signal.date,
@@ -242,7 +242,6 @@ async function seedIntelSignals() {
           signal.impact || null,
           signal.summary || null,
           signal.source || null,
-          JSON.stringify(signal.products || []),
         ]
       );
     }
@@ -381,8 +380,8 @@ async function seedAdminUser() {
     await client.query(
       `INSERT INTO users (id, email, password_hash, display_name, role, created_at)
        VALUES ($1, $2, $3, $4, $5, NOW())
-       ON CONFLICT (email) DO UPDATE SET password_hash = $3, role = $5, updated_at = NOW()`,
-      ['admin-00000000-0000-0000-0000-000000000000', 'admin@ngs-platform.local', hashedPassword, 'Admin User', 'admin']
+       ON CONFLICT (email) DO UPDATE SET password_hash = $3, role = $5`,
+      ['00000000-0000-0000-0000-000000000000', 'admin@ngs-platform.local', hashedPassword, 'Admin User', 'admin']
     );
     await client.query('COMMIT');
     console.log('✓ Seeded default admin user (admin@ngs-platform.local)');
