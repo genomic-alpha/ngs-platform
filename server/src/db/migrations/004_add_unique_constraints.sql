@@ -1,4 +1,4 @@
 -- Add missing UNIQUE constraints needed for ON CONFLICT upserts in seed/sync
+-- Uses CREATE UNIQUE INDEX which supports IF NOT EXISTS (ALTER TABLE ADD CONSTRAINT does not)
 
-ALTER TABLE financial_profiles
-  ADD CONSTRAINT financial_profiles_vendor_key_unique UNIQUE (vendor_key);
+CREATE UNIQUE INDEX IF NOT EXISTS financial_profiles_vendor_key_unique ON financial_profiles (vendor_key);
