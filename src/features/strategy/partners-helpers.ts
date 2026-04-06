@@ -7,13 +7,13 @@ import { CATEGORIES } from '@/core';
 export function getStatusColor(status: PartnerStatus): string {
   switch (status) {
     case 'active':
-      return 'bg-green-100 text-green-800';
+      return 'bg-green-900/40 text-green-400';
     case 'evaluating':
-      return 'bg-yellow-100 text-yellow-800';
+      return 'bg-yellow-900/40 text-yellow-400';
     case 'prospect':
-      return 'bg-blue-100 text-blue-800';
+      return 'bg-blue-900/40 text-blue-400';
     default:
-      return 'bg-gray-100 text-gray-800';
+      return 'bg-gray-700 text-gray-300';
   }
 }
 
@@ -23,15 +23,15 @@ export function getStatusColor(status: PartnerStatus): string {
 export function getTierColor(tier: PartnerTier): string {
   switch (tier) {
     case 'strategic':
-      return 'bg-purple-100 text-purple-800';
+      return 'bg-purple-900/40 text-purple-400';
     case 'preferred':
-      return 'bg-pink-100 text-pink-800';
+      return 'bg-pink-900/40 text-pink-400';
     case 'approved':
-      return 'bg-indigo-100 text-indigo-800';
+      return 'bg-indigo-900/40 text-indigo-400';
     case 'evaluating':
-      return 'bg-amber-100 text-amber-800';
+      return 'bg-amber-900/40 text-amber-400';
     default:
-      return 'bg-gray-100 text-gray-800';
+      return 'bg-gray-700 text-gray-300';
   }
 }
 
