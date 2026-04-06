@@ -173,7 +173,15 @@ async function seedFinancials() {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
+    // Get existing vendor keys to skip orphaned financial profiles
+    const vendorResult = await client.query('SELECT key FROM vendors');
+    const vendorKeys = new Set(vendorResult.rows.map((r: { key: string }) => r.key));
+    let skipped = 0;
     for (const [vendorKey, profile] of Object.entries(DEFAULT_FINANCIALS)) {
+      if (!vendorKeys.has(vendorKey)) {
+        skipped++;
+        continue;
+      }
       await client.query(
         `INSERT INTO financial_profiles (vendor_key, ticker, last_fy, revenue, segment_revenue, revenue_growth, gross_margin, op_margin, rd_spend, rd_pct, eps_non_gaap, cash, total_debt, market_cap, guidance_revenue, guidance_eps, key_commentary, filing_source, profitable, quarterly, balance_sheet, installed_base, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, NOW())
@@ -206,7 +214,7 @@ async function seedFinancials() {
       );
     }
     await client.query('COMMIT');
-    console.log(`✓ Seeded ${Object.keys(DEFAULT_FINANCIALS).length} financial profiles`);
+    console.log(`✓ Seeded ${Object.keys(DEFAULT_FINANCIALS).length - skipped} financial profiles${skipped ? ` (${skipped} skipped — no matching vendor)` : ''}`);
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;
@@ -329,7 +337,10 @@ async function seedPartners() {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
+    const vendorResult = await client.query('SELECT key FROM vendors');
+    const vendorKeys = new Set(vendorResult.rows.map((r: { key: string }) => r.key));
     for (const partner of DEFAULT_PARTNERS) {
+      const vk = (partner as any).vendorKey || null;
       await client.query(
         `INSERT INTO partners (id, name, vendor_key, status, tier, health_score, contract_start, contract_end, annual_value, products_used, integration_status, notes, created_at, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW(), NOW())
@@ -338,7 +349,7 @@ async function seedPartners() {
         [
           partner.id,
           (partner as any).primaryContact || null,
-          (partner as any).vendorKey || null,
+          vk && vendorKeys.has(vk) ? vk : null,
           partner.status || null,
           partner.tier || null,
           (partner as any).healthScore || null,
