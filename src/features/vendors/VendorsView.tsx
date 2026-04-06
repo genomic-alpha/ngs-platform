@@ -204,8 +204,8 @@ export const VendorsView: React.FC<VendorsViewProps> = ({ products, indicationFi
         style={{
           display: 'flex',
           gap: '0',
-          borderBottom: '2px solid #e5e7eb',
-          backgroundColor: '#f9fafb',
+          borderBottom: '2px solid #374151',
+          backgroundColor: '#1f2937',
           borderRadius: '8px 8px 0 0',
           overflow: 'hidden',
         }}
@@ -218,9 +218,9 @@ export const VendorsView: React.FC<VendorsViewProps> = ({ products, indicationFi
               flex: 1,
               padding: '12px 16px',
               border: 'none',
-              backgroundColor: activeTab === tab ? '#fff' : '#f9fafb',
-              borderBottom: activeTab === tab ? '3px solid #3b82f6' : '1px solid #e5e7eb',
-              color: activeTab === tab ? '#1f2937' : '#6b7280',
+              backgroundColor: activeTab === tab ? '#111827' : '#1f2937',
+              borderBottom: activeTab === tab ? '3px solid #3b82f6' : '1px solid #374151',
+              color: activeTab === tab ? '#f3f4f6' : '#9ca3af',
               cursor: 'pointer',
               fontSize: '14px',
               fontWeight: activeTab === tab ? 600 : 500,
@@ -239,9 +239,9 @@ export const VendorsView: React.FC<VendorsViewProps> = ({ products, indicationFi
       {/* Tab Content */}
       <div
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: '#111827',
           borderRadius: '0 0 8px 8px',
-          border: '1px solid #e5e7eb',
+          border: '1px solid #374151',
           padding: '20px',
         }}
       >

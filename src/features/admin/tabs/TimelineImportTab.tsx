@@ -1,15 +1,15 @@
 import React from 'react';
 import { Plus, Trash2, Download, Upload, Copy, RefreshCw } from 'lucide-react';
-import type { TimelineEvent, Vendor, Product } from '@/core/types';
+import type { TimelineEvent, Vendor, Product, Partner, CompatibilityEntry, IntelSignal } from '@/core/types';
 
 interface TimelineImportTabProps {
   timelineEvents: TimelineEvent[];
   setTimelineEvents: (events: TimelineEvent[]) => void;
   vendors: Vendor[];
   products: Product[];
-  partners: any[];
-  compatibility: any[];
-  intelSignals: any[];
+  partners: Partner[];
+  compatibility: CompatibilityEntry[];
+  intelSignals: IntelSignal[];
   onExport: () => void;
   onImport: () => void;
   onGenerateConstants: () => void;

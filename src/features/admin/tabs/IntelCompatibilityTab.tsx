@@ -100,7 +100,7 @@ export function IntelCompatibilityTab({
                 <select
                   value={signal.type}
                   onChange={(e) => {
-                    const updated = intelSignals.map((s) => (s.id === signal.id ? { ...s, type: e.target.value as any } : s));
+                    const updated = intelSignals.map((s) => (s.id === signal.id ? { ...s, type: e.target.value as 'regulatory' | 'pricing' | 'product_launch' | 'partnership' } : s));
                     setIntelSignals(updated);
                   }}
                   className="bg-gray-700 text-white rounded px-2 py-1 text-sm"
@@ -113,7 +113,7 @@ export function IntelCompatibilityTab({
                 <select
                   value={signal.impact}
                   onChange={(e) => {
-                    const updated = intelSignals.map((s) => (s.id === signal.id ? { ...s, impact: e.target.value as any } : s));
+                    const updated = intelSignals.map((s) => (s.id === signal.id ? { ...s, impact: e.target.value as 'high' | 'medium' | 'low' } : s));
                     setIntelSignals(updated);
                   }}
                   className="bg-gray-700 text-white rounded px-2 py-1 text-sm"
@@ -210,7 +210,7 @@ export function IntelCompatibilityTab({
                     value={entry.level}
                     onChange={(e) => {
                       const updated = compatibility.map((c) =>
-                        c.source === entry.source && c.target === entry.target ? { ...c, level: e.target.value as any } : c
+                        c.source === entry.source && c.target === entry.target ? { ...c, level: e.target.value as 'validated' | 'compatible' | 'theoretical' } : c
                       );
                       setCompatibility(updated);
                     }}
